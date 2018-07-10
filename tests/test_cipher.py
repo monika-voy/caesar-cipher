@@ -60,16 +60,20 @@ class TestCipher(unittest.TestCase):
         self.assertEqual(expected_result,caesar_cipher.cipher("lorem","three"))
 
     def test_cipher_message_longer_than_200_char_should_return_error_msg(self):
-        expected_result='Message must be maximum 200 characters long'
+        expected_result="Message must be maximum 200 characters long"
         self.assertEqual(expected_result,caesar_cipher.cipher("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",3))
+
+    def test_cipher_spaces_should_be_left_unciphered(self):
+        expected_result="Ciphered message: oruhp lsvxp"
+        self.assertEqual(expected_result,caesar_cipher.cipher("lorem ipsum",3))
 
 class TestDecipher(unittest.TestCase):
     def test_decipher_ciphered_message_should_decipher_by_rot(self):
-        expected_result="lorem"
+        expected_result="Deciphered message: lorem"
         self.assertEqual(expected_result, caesar_cipher.decipher("oruhp",3))
 
     def test_decipher_ciphered_message_should_decipher_only_in_defined_ASCII_range(self):
-        expected_result="~"
+        expected_result="Deciphered message: ~"
         self.assertEqual(expected_result,caesar_cipher.decipher("!",2))
 
     def test_decipher_ciphered_message_character_out_of_defined_ASCII_scope_should_return_error_message(self):
@@ -94,29 +98,32 @@ class TestDecipher(unittest.TestCase):
         self.assertEqual(expected_result, caesar_cipher.decipher("lorem","#"))
 
     def test_decipher_rot_string_type_number_as_word_in_PL_should_return_deciphered_msg(self):
-        expected_result="lorem"
+        expected_result="Deciphered message: lorem"
         self.assertEqual(expected_result,caesar_cipher.decipher("oruhp","trzy"))
 
     def test_decipher_rot_string_type_number_as_word_in_EN_should_return_deciphered_msg(self):
-        expected_result="lorem"
+        expected_result="Deciphered message: lorem"
         self.assertEqual(expected_result,caesar_cipher.decipher("oruhp","three"))
 
     def test_decipher_alpha_only_should_return_ciphered_msg(self):
-        expected_result="lorem"
+        expected_result="Deciphered message: lorem"
         self.assertEqual(expected_result, caesar_cipher.decipher("oruhp", 3), msg="Does not return ciphered msg")
 
     def test_decipher_num_should_return_deciphered_msg(self):
-        expected_result="1234"
+        expected_result="Deciphered message: 1234"
         self.assertEqual(expected_result,caesar_cipher.decipher("4567",3), msg="Does not return ciphered msg")
 
     def test_decipher_special_char_should_return_deciphered_msg(self):
-        expected_result="!@#$%^&*"
+        expected_result="Deciphered message: !@#$%^&*"
         self.assertEqual(expected_result,caesar_cipher.decipher("$C&'(a)-",3), msg="Does not return ciphered msg")
 
     def test_decipher_message_longer_than_200_char_should_return_error_msg(self):
         expected_result="Ciphered message must be maximum 200 characters long"
         self.assertEqual(expected_result,caesar_cipher.decipher("Oruhp#lsvxp#groru#vlw#dphw,#frqvhfwhwxu#dglslvflqj#holw,#vhg#gr#hlxvprg#whpsru#lqflglgxqw#xw#oderuh#hw#groruh#pdjqd#doltxd.#Xw#hqlp#dg#plqlp#yhqldp#txlv#qrvwuxg#hahuflwdwlrq#xoodpfr#oderulv#qlvl#xw#doltxls#ha#hd#frpprgr#frqvhtxdw.#Gxlv#dxwh#luxuh#groru#lq#uhsuhkhqghulw#lq#yroxswdwh#yholw#hvvh#flooxp#groruh#hx#ixjldw#qxood#sduldwxu.#Hafhswhxu#vlqw#rffdhfdw#fxslgdwdw#qrq#surlghqw,#vxqw#lq#fxosd#txl#riilfld#ghvhuxqw#proolw#dqlp#lg#hvw#oderuxp.",3))
 
+    def test_decipher_spaces_should_be_left_undeciphered(self):
+        expected_result="Deciphered message: lorem ipsum"
+        self.assertEqual(expected_result,caesar_cipher.decipher("oruhp lsvxp",3))
 
 if __name__ == "__main__":
     unittest.main()

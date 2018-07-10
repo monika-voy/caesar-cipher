@@ -34,6 +34,9 @@ def cipher(message, rot):
 
     else:
         for character in message:
+            if character == " ":
+                ciphertxt += character
+                continue
             polishch = ["ó", "ą", "ę", "ć", "ń", "ś", "ż", "ź", "ł"]
             standardch = ["o", "a", "e", "c", "n", "s", "z", "z", "l"]
             for polish_char, standard_char in zip(polishch, standardch):
@@ -46,10 +49,10 @@ def cipher(message, rot):
             else:
                 character = (character - 32 + rot) % (127 - 32) + 32
                 ciphertxt += chr(character)
+
         return "Ciphered message: " + ciphertxt
 
 
-print(cipher("Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.","three"))
 
 
 def decipher(text, rot):
@@ -85,7 +88,9 @@ def decipher(text, rot):
         return "Message not deciphered: " + text
 
     for character in text:
-
+        if character == " ":
+            deciphertxt += character
+            continue
         character = ord(character)
         if character < 32:
             return "Invalid character in the ciphered message!"
@@ -94,7 +99,6 @@ def decipher(text, rot):
         else:
             character = (character - 32 - rot) % (127 - 32) + 32
             deciphertxt += chr(character)
-    return deciphertxt
+    return "Deciphered message: " + deciphertxt
 
 
-print(decipher("oruhp", 3))
